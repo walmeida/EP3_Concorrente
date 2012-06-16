@@ -1,0 +1,62 @@
+Classes:
+
+Thread:
+    - start()
+        Cria uma nova pthread com atributo PTHREAD_CREATE_DETACHED,
+        e executa método run()
+    - run()
+        Método vazio que deve ser sobrescrito.
+    - getSem()
+        Retorna semáforo que pode ser usado para travar a thread.
+
+Passenger: herda de Thread
+    - run()
+        Chama pegaCarona() 2 vezes (decrementando atributo com num de voltas)
+
+PassengerCreator: herda de Thread
+    - run()
+        Cria um Passenger com rank adequado.
+        TimeManager.delay(interval)
+
+Car: herda de Thread
+    - run()
+        carrega()
+        Espera dar tempo de uma volta (TimeManager)
+        descarrega()
+
+SemaphoreMonitor:
+    - empty(cv)
+    - wait(cv)
+    - wait(cv, rank)
+    - signal(cv)
+    - signal_all(cv)
+    - minrank(cv)
+
+RollerCoasterMonitor:
+    Possui um objeto SemaphoreMonitor
+    - pegaCarona()
+    - carrega()
+    - descarrega()
+
+TimeManager: herda de Thread
+    Possui um objeto SemaphoreMonitor
+    - run()
+        Loop infinito de advanceTime().
+        Único método que não respeita restrições de monitor.
+        (é feio, mas fica assim se não encontrarmos solução melhor e
+         igualmente simples)
+    - advanceTime()
+        Incrementa tempo
+        Acorda PassengerCreator ou Car (ou ambos)
+        Cars são organizados por rank (não pode haver ultrapassagem).
+    - time()
+        Devolve o instante de tempo atual.
+    - delay(interval)
+        Faz com que a thread que chamou seja acordada
+        depois deste intervalo de tempo.
+
+ConditionVariable:
+    Contém vetor de filas (std::queue ?), e vetor dos tamanhos de cada uma.
+    Cada fila é para um rank diferente.
+    - insert(Thread)
+    - remove()
