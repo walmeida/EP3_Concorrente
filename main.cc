@@ -1,14 +1,18 @@
+<<<<<<< HEAD
 #include <cstdio>
 #include <cstdlib>
+=======
+#include <iostream>
+>>>>>>> 51c0ca9f874d93c9b8133fb6fb0354b3def3376a
 
-/* Número de Passageiros */
-int m;
 /* Número de Carrinhos */
+int m;
+/* Número de Passageiros em cada Carrinho */
 int C;
 /* Taxa de chegada de Passageiros */
 float taxa;
 
-/* ep3.exe <número de passageiros> <número de carrinhos> <taxa de chegada de passageiros> */
+/* montanharussa <número de passageiros> <número de carrinhos> <taxa de chegada de passageiros> */
 void read_parameters(int argc, char* argv[]){
     if (argc < 4){
         std::cerr << "Erro na leitura da entrada. Argumentos esperados: "
@@ -17,10 +21,10 @@ void read_parameters(int argc, char* argv[]){
         exit (-1);
     }
     
-    n = (unsigned int) atoi(argv[1]);
     C = (unsigned int) atoi(argv[2]);
-    taxa = (float) atof(argv[3])
-    
+    m = (unsigned int) atoi(argv[1]);
+    taxa = (float) atof(argv[3]);
+    std::cout << "taxa: " << taxa << " m: " << m << " C: " << C << std::endl;
 }
 
 int main(int argc, char* argv[]){
