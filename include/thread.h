@@ -34,7 +34,7 @@ class Thread {
             return 0;
         }
         virtual void run () {}
-        sem_t* getSemaphore () {
+        sem_t* getSemaphore () const {
             return semaphore_;
         }
     private:

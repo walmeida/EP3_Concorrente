@@ -8,7 +8,7 @@ LIBS = -lpthread -lrt
 
 EXE = montanharussa
 
-_DEPS = passenger.h passengerCreator.h thread.h timeManager.h
+_DEPS = passenger.h passengerCreator.h thread.h timeManager.h Car.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 _OBJ = main.o Passenger.o PassengerCreator.o thread.o TimeManager.o
