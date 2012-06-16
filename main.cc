@@ -2,6 +2,7 @@
 #include <iostream>
 #include "thread.h"
 #include "car.h"
+#include "conditionvariable.h"
 
 /* Número de Carrinhos */
 int m;
@@ -38,6 +39,11 @@ int main(int argc, char* argv[]){
     tim.tv_nsec = 500;
     nanosleep(&tim , &tim2);
     
+    ConditionVariable<Thread> cv(3);
+    cv.Insert (t,2);
+    cv.Insert (c,0);
+    cv.Remove ();
+    cv.Remove ();
 
     return 0;
 }
