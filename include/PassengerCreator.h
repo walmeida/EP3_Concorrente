@@ -3,7 +3,7 @@
 
 class PassengerCreator : public Thread {
     private:
-        
+       const float PROPORCAO = 0.3; 
     public:
         PassengerCreator ();
         ~PassengerCreator ();

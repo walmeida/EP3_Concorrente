@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 #include <cstdio>
 #include <cstdlib>
-=======
 #include <iostream>
->>>>>>> 51c0ca9f874d93c9b8133fb6fb0354b3def3376a
 
 /* Número de Carrinhos */
 int m;

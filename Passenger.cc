@@ -1,8 +1,8 @@
 #include "Passenger.h"
 #include <iostream>
 
-Passenger::Passenger () {
-    
+Passenger::Passenger (bool hasTicket) {
+    goldenTicket = hasTicket;
 }
 
 Passenger::~Passenger () {
