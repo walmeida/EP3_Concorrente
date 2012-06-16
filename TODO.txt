@@ -45,6 +45,8 @@ TimeManager: herda de Thread
         Único método que não respeita restrições de monitor.
         (é feio, mas fica assim se não encontrarmos solução melhor e
          igualmente simples)
+        ALTERNATIVA: colocar este método no main() ou coisa equivalente,
+                     e isso deixa de herdar de Thread.
     - advanceTime()
         Incrementa tempo
         Acorda PassengerCreator ou Car (ou ambos)
