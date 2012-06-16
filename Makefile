@@ -8,7 +8,7 @@ LIBS = -lpthread
 
 EXE = montanharussa
 
-_DEPS = thread.h
+_DEPS = Thread.h Car.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 _OBJ = main.o thread.o
