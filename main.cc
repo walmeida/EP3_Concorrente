@@ -1,4 +1,6 @@
 #include <iostream>
+#include "thread.h"
+#include <cerrno>
 
 /* Número de Carrinhos */
 int m;
@@ -24,5 +26,7 @@ void read_parameters(int argc, char* argv[]){
 
 int main(int argc, char* argv[]){
   read_parameters (argc,argv);
+  Thread t;
+  std::cout << t.start () << std::endl;
   return 0;
 }
