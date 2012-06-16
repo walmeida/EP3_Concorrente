@@ -1,6 +1,6 @@
+#include <cstdlib>
 #include <iostream>
 #include "thread.h"
-#include <cerrno>
 
 /* Número de Carrinhos */
 int m;
