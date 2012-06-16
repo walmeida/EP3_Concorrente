@@ -17,6 +17,8 @@ PassengerCreator: herda de Thread
     - run()
         Cria um Passenger com rank adequado.
         TimeManager.delay(interval)
+    - hasGoldenTicket()
+        Chamado pelo método run. Verifica se passageiro terá um bilhete dourado    
 
 Car: herda de Thread
     - run()
