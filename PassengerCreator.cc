@@ -1,19 +1,20 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
-#include "Passenger.h"
+#include "passengerCreator.h"
 
 /* Define se o Passageiro terá um bilhete dourado. */
-bool PassengerCreator::hasGoldenTicket(){
+bool hasGoldenTicket(){
    float valor;
    valor = rand() / ( RAND_MAX + 1.0 );
    
-   if(valor > PROPORCAO)
+   if(valor > 0.3)
     return true;
    
    return false;
 }
 
-Passenger PassengerCreator::run(){
-    Passenger *new_passenger = new Passenger ();
-}
+/*Passenger run(){
+   Passenger *new_passenger = new Passenger ();
+   return *new_passenger;
+}*/

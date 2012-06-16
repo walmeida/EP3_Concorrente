@@ -1,4 +1,4 @@
-#include "Passenger.h"
+#include "passenger.h"
 #include <iostream>
 
 Passenger::Passenger (bool hasTicket) {

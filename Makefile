@@ -4,14 +4,14 @@ BDIR = bin
 
 CC = g++
 CFLAGS = -Wall -I$(IDIR) -O2
-LIBS = -lpthread
+LIBS = -lpthread -lrt
 
 EXE = montanharussa
 
-_DEPS = Passenger.h PassengerCreator.h Thread.h TimeManager.h
+_DEPS = passenger.h passengerCreator.h thread.h timeManager.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = main.o Passenger.o PassengerCreator.o Thread.o TimeManager.o
+_OBJ = main.o Passenger.o PassengerCreator.o thread.o TimeManager.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: %.cc $(DEPS)

@@ -1,4 +1,4 @@
-#include "TimeManager.h"
+#include "timeManager.h"
 #include <iostream>
 
 TimeManager::TimeManager () {

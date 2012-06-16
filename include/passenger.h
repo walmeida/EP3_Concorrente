@@ -1,7 +1,7 @@
 #ifndef PASSENGER_H_
 #define PASSENGER_H_
 
-#include "Thread.h"
+#include "thread.h"
 
 class Passenger : public Thread {
     private:
