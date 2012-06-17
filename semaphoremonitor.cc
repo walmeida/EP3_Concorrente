@@ -2,10 +2,17 @@
 
 unsigned long long SemaphoreMonitor::id_ = 0;
 
-SemaphoreMonitor::SemaphoreMonitor () {
+SemaphoreMonitor::SemaphoreMonitor () : mutex_(0) {
+    sem_name_[0] = '\0';
+}
+
+int SemaphoreMonitor::Init () {
     sprintf (sem_name_, "sem_monitor%llu", id_);
     mutex_ = sem_open (sem_name_, O_CREAT | O_EXCL, S_IRWXU, 1);
     id_++;
+    if (!mutex_ || mutex_ == SEM_FAILED)
+        return 1;
+    return 0;
 }
 
 SemaphoreMonitor::~SemaphoreMonitor () {
