@@ -34,7 +34,7 @@ int main(int argc, char* argv[]){
     srand (iseed);
     Thread t;
     std::cout << t.start () << std::endl;
-    Car c;
+    Car c(C);
     std::cout << c.start () << std::endl;
 
     Passenger p;

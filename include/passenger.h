@@ -7,23 +7,25 @@
 class Passenger : public Thread {
     public:
         Passenger (){
-          goldenTicket = hasGoldenTicket();
+            goldenTicket = createGoldenTicket();
         };
         ~Passenger (){}
         void run () {
             for (int i = 0; i < 5; ++i)
                 std::cout << "Passenger is alive! Has he a golden ticket? - " << std::boolalpha << goldenTicket << std::endl;
         }
-        
-        bool hasGoldenTicket(){
-           float valor;
-           valor = rand() / ( RAND_MAX + 1.0 );
-           if(valor > 0.3) 
-             return true;
-           return false;
+        bool hasGoldenTicket () const {
+            return goldenTicket;
         }
     private:
-      bool goldenTicket;
+        bool goldenTicket;
+        bool createGoldenTicket(){
+            float valor;
+            valor = rand() / ( RAND_MAX + 1.0 );
+            if(valor > 0.3) 
+                return true;
+            return false;
+        }
 };
 
 #endif // PASSENGER_H_

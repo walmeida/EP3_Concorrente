@@ -9,7 +9,7 @@
 template<class T>
 class ConditionVariable {
     public:
-        ConditionVariable (unsigned int num_ranks);
+        ConditionVariable (unsigned int num_ranks = 1);
         ~ConditionVariable ();
         void insert (T t, int rank);
         T remove ();
