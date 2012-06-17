@@ -5,6 +5,7 @@
 #include "car.h"
 #include "passenger.h"
 #include "conditionvariable.h"
+#include "rollercoastermonitor.h"
 
 /* Número de Carrinhos */
 int m;
@@ -32,12 +33,14 @@ int main(int argc, char* argv[]){
     unsigned int iseed = (unsigned int) time(NULL);
     read_parameters (argc,argv);
     srand (iseed);
+    RollerCoasterMonitor rcm(m);
     Thread t;
     std::cout << t.start () << std::endl;
-    Car c(C);
+    Car c(&rcm, C);
+    rcm.setCar(0, &c);
     std::cout << c.start () << std::endl;
 
-    Passenger p;
+    Passenger p(&rcm);
     std::cout << p.start () << std::endl;
     
     struct timespec tim, tim2;

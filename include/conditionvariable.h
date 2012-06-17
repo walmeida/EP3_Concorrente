@@ -5,13 +5,14 @@
 #include <queue>
 #include <vector>
 #include <stdexcept>
+#include <cassert>
 
 template<class T>
 class ConditionVariable {
     public:
         ConditionVariable (unsigned int num_ranks = 1);
         ~ConditionVariable ();
-        void insert (T t, int rank);
+        void insert (T t, unsigned int rank);
         T remove ();
         bool empty () const;
         unsigned int getMinRank () const;
@@ -30,7 +31,8 @@ template<class T>
 ConditionVariable<T>::~ConditionVariable () {}
 
 template<class T>
-void ConditionVariable<T>::insert (T t, int rank) {
+void ConditionVariable<T>::insert (T t, unsigned int rank) {
+    assert(rank < num_ranks_);
     queue_[rank].push (t);
     queue_size_[rank]++;
 }

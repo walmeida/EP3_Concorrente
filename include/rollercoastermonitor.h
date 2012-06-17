@@ -2,19 +2,22 @@
 #define ROLLER_COASTER_MONITOR_H_
 
 #include <vector>
+#include <list>
 #include <semaphore.h>
 #include "conditionvariable.h"
 #include "semaphoremonitor.h"
-#include "car.h"
-#include "passenger.h"
+
+class Car;
+class Passenger;
 
 class RollerCoasterMonitor {
     public:
         RollerCoasterMonitor (unsigned int number_of_cars);
         ~RollerCoasterMonitor ();
-        void pegaCarona (Passenger& p);
-        void carrega (Car& c);
-        void descarrega (Car& c);
+        void setCar (unsigned int Id, Car* c);
+        void pegaCarona (Passenger* p);
+        void carrega (Car* c);
+        void descarrega (Car* c);
     private:
         SemaphoreMonitor sm_;
         unsigned int number_of_cars_;

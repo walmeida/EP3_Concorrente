@@ -1,2 +1,9 @@
 #include "passenger.h"
-#include <iostream>
+#include "rollercoastermonitor.h"
+
+void Passenger::run () {
+    while (rides_left_) {
+        rcm_->pegaCarona (this);
+        rides_left_--;
+    }
+}

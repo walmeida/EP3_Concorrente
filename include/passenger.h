@@ -4,20 +4,21 @@
 #include <cstdlib>
 #include "thread.h"
 
+class RollerCoasterMonitor;
+
 class Passenger : public Thread {
     public:
-        Passenger (){
+        Passenger (RollerCoasterMonitor *rcm) : rcm_(rcm), rides_left_(2) {
             goldenTicket = createGoldenTicket();
-        };
-        ~Passenger (){}
-        void run () {
-            for (int i = 0; i < 5; ++i)
-                std::cout << "Passenger is alive! Has he a golden ticket? - " << std::boolalpha << goldenTicket << std::endl;
         }
+        ~Passenger () {}
+        void run ();
         bool hasGoldenTicket () const {
             return goldenTicket;
         }
     private:
+        RollerCoasterMonitor *rcm_;
+        unsigned int rides_left_;
         bool goldenTicket;
         bool createGoldenTicket(){
             float valor;

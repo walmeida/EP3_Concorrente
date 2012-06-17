@@ -3,18 +3,17 @@ ODIR = obj
 BDIR = bin
 
 CC = g++
-CFLAGS = -Wall -I$(IDIR) -O2
+CFLAGS = -Wall -I$(IDIR) -g
 LIBS = -lpthread
 
 EXE = montanharussa
 
-_DEPS = passenger.h passengerCreator.h thread.h timeManager.h car.h \
-		conditionvariable.h semaphoremonitor.h rollercoastermonitor.h
-
+_DEPS = passenger.h passengercreator.h thread.h timemanager.h car.h \
+		rollercoastermonitor.h semaphoremonitor.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = main.o Passenger.o PassengerCreator.o thread.o TimeManager.o \
-	   semaphoremonitor.o car.o rollercoastermonitor.o
+_OBJ = main.o passenger.o passengercreator.o thread.o timemanager.o car.o \
+	   rollercoastermonitor.o semaphoremonitor.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: %.cc $(DEPS)

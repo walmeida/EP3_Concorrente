@@ -5,16 +5,16 @@
 #include "thread.h"
 #include "passenger.h"
 
+class RollerCoasterMonitor;
+
 class Car : public Thread {
     public:
-        Car (unsigned int capacity) : capacity_(capacity) {
+        Car (RollerCoasterMonitor *rcm, unsigned int capacity) : 
+            rcm_(rcm), capacity_(capacity), passenger_list_() {
             carId_ = nextCarId++;
         }
         ~Car () {}
-        void run () {
-            for (int i = 0; i < 5; ++i)
-                std::cout << "Car is running" << std::endl;
-        }
+        void run ();
         void addPassenger (Passenger* p) {
             passenger_list_.push_back (p);
         }
@@ -31,6 +31,7 @@ class Car : public Thread {
             return passenger_list_.empty ();
         }
     private:
+        RollerCoasterMonitor *rcm_;
         static unsigned int nextCarId;
         unsigned int carId_;
         unsigned int capacity_;

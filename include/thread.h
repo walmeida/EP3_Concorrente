@@ -21,6 +21,10 @@ class Thread {
             sem_unlink (sem_name_);
         }
         int start () {
+            if (semaphore_ == SEM_FAILED) { // try again
+                sem_unlink (sem_name_);
+                semaphore_ = sem_open (sem_name_, O_CREAT | O_EXCL, S_IRWXU, 0);
+            }
             if (semaphore_ == SEM_FAILED)
                 return 1;
             pthread_attr_t tattr;
