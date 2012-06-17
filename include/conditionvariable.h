@@ -11,8 +11,10 @@ class ConditionVariable {
     public:
         ConditionVariable (unsigned int num_ranks);
         ~ConditionVariable ();
-        void Insert (T t, int rank);
-        T Remove ();
+        void insert (T t, int rank);
+        T remove ();
+        bool empty () const;
+        unsigned int getMinRank () const;
     private:
         unsigned int num_ranks_;
         std::vector<std::queue<T> > queue_;
@@ -28,16 +30,14 @@ template<class T>
 ConditionVariable<T>::~ConditionVariable () {}
 
 template<class T>
-void ConditionVariable<T>::Insert (T t, int rank) {
+void ConditionVariable<T>::insert (T t, int rank) {
     queue_[rank].push (t);
     queue_size_[rank]++;
 }
 
 template<class T>
-T ConditionVariable<T>::Remove () {
-    unsigned int rank = 0;
-    while (rank < num_ranks_ && queue_size_[rank] == 0)
-        ++rank;
+T ConditionVariable<T>::remove () {
+    unsigned int rank = getMinRank ();
     if (rank == num_ranks_) {
         throw std::out_of_range("ConditionVariable<>::Remove(): empty queue");
     }
@@ -45,6 +45,22 @@ T ConditionVariable<T>::Remove () {
     queue_[rank].pop ();
     queue_size_[rank]--;
     return t;
+}
+
+template<class T>
+bool ConditionVariable<T>::empty () const {
+    unsigned int rank = getMinRank ();
+    if (rank == num_ranks_)
+        return true;
+    return false;
+}
+
+template<class T>
+unsigned int ConditionVariable<T>::getMinRank () const {
+    unsigned int rank = 0;
+    while (rank < num_ranks_ && queue_size_[rank] == 0)
+        ++rank;
+    return rank;
 }
 
 #endif

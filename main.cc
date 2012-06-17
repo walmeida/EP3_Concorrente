@@ -40,10 +40,10 @@ int main(int argc, char* argv[]){
     nanosleep(&tim , &tim2);
     
     ConditionVariable<Thread> cv(3);
-    cv.Insert (t,2);
-    cv.Insert (c,0);
-    cv.Remove ();
-    cv.Remove ();
+    cv.insert (t,2);
+    cv.insert (c,0);
+    cv.remove ();
+    cv.remove ();
 
     return 0;
 }
