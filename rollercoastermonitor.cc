@@ -71,18 +71,36 @@ void RollerCoasterMonitor::descarrega (Car* c) {
 }
 
 void RollerCoasterMonitor::printInfo () {
-    // Imprimindo passageiros da fila
-    cout << passengers_queue_.size () << " passageiros na fila: ";
-    std::list<Passenger*>::const_iterator it = passengers_queue_.begin ();
-    if (it != passengers_queue_.end ()) {
-        (*it)->print ();
-        while (++it != passengers_queue_.end ()) {
-            cout << ", ";
+    // Imprimindo passageiros na fila
+    {
+        cout << passengers_queue_.size () << " passageiros na fila: \n\t";
+        std::list<Passenger*>::const_iterator it = passengers_queue_.begin ();
+        if (it != passengers_queue_.end ()) {
             (*it)->print ();
+            while (++it != passengers_queue_.end ()) {
+                cout << ", ";
+                (*it)->print ();
+            }
+        }
+        cout << endl;
+    }
+    // Imprimindo passageiros nos carros
+    for (unsigned int c = 0; c < number_of_cars_; ++c) {
+        cout << "Carro " << c << " - ";
+        if (car_moving_[c])
+            cout << "Movendo-se com ";
+        else
+            cout << "Parado com ";
+        cout << car_list_[c]->occupiedSeats () << " passageiros: \n\t";
+        Car::const_iterator it = car_list_[c]->begin ();
+        if (it != car_list_[c]->end ()) {
+            (*it)->print ();
+            while (++it != car_list_[c]->end ()) {
+                cout << ", ";
+                (*it)->print ();
+            }
         }
     }
     cout << endl;
-    // Imprimindo passageiros nos carros
-
-    cout << endl;
+    cout << "=============================================" << endl;
 }

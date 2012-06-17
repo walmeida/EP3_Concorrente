@@ -22,6 +22,16 @@ class Car : public Thread {
         void removePassenger (Passenger* p) {
             passenger_list_.remove (p);
         }
+        typedef std::list<Passenger*>::const_iterator const_iterator;
+        const_iterator begin () const {
+            return passenger_list_.begin ();
+        }
+        const_iterator end () const {
+            return passenger_list_.end ();
+        }
+        unsigned int occupiedSeats () {
+            return passenger_list_.size ();
+        }
         unsigned int getId () const {
             return car_id_;
         }
