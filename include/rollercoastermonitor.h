@@ -19,6 +19,7 @@ class RollerCoasterMonitor {
         void carrega (Car* c);
         void descarrega (Car* c);
     private:
+        void printInfo ();
         SemaphoreMonitor sm_;
         unsigned int number_of_cars_;
         std::vector<Car*> car_list_;

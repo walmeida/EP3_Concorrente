@@ -22,26 +22,26 @@ void RollerCoasterMonitor::setCar (unsigned int Id, Car* c) {
 
 void RollerCoasterMonitor::pegaCarona (Passenger* p) {
     sm_.monitorEntry ();
-    cout << "pegando carona" << endl;
+    printInfo ();
     passengers_queue_.push_back (p);
     sem_t *s = p->getSemaphore ();
     const unsigned int rank = p->hasGoldenTicket () ? 0 : 1;
     while (car_ == 0)
         sm_.wait (s, car_available_, rank);
     car_--; car_list_[car_loading_]->addPassenger (p);
+    passengers_queue_.remove (p);
     const unsigned int myCar = car_loading_;
     seat_--; sm_.signal (seat_occupied_);
     while (!finished_ride_[myCar])
         sm_.wait (s, open_[myCar]);
     car_list_[car_loading_]->removePassenger (p);
     sm_.signal (passenger_left_[myCar]);
-    cout << "saiu do carrinho" << endl;
     sm_.monitorExit ();
 }
     
 void RollerCoasterMonitor::carrega (Car* c) {
     sm_.monitorEntry ();
-    cout << "carregando passageiros" << endl;
+    printInfo ();
     sem_t *s = c->getSemaphore ();
     while (car_loading_ != c->getId ())
         sm_.wait (s, car_has_loaded_);
@@ -53,13 +53,12 @@ void RollerCoasterMonitor::carrega (Car* c) {
     }
     car_loading_ = (car_loading_ + 1) % number_of_cars_;
     sm_.signal_all (car_has_loaded_);
-    cout << "carregou passageiros" << endl;
     sm_.monitorExit ();
 }
 
 void RollerCoasterMonitor::descarrega (Car* c) {
     sm_.monitorEntry ();
-    cout << "descarregando passageiros" << endl;
+    printInfo ();
     sem_t *s = c->getSemaphore ();
     const unsigned int myId = c->getId ();
     finished_ride_[myId] = true;
@@ -68,6 +67,22 @@ void RollerCoasterMonitor::descarrega (Car* c) {
         sm_.wait (s, passenger_left_[myId]);
     }
     finished_ride_[myId] = false;
-    cout << "descarregou passageiros" << endl;
     sm_.monitorExit ();
+}
+
+void RollerCoasterMonitor::printInfo () {
+    // Imprimindo passageiros da fila
+    cout << passengers_queue_.size () << " passageiros na fila: ";
+    std::list<Passenger*>::const_iterator it = passengers_queue_.begin ();
+    if (it != passengers_queue_.end ()) {
+        (*it)->print ();
+        while (++it != passengers_queue_.end ()) {
+            cout << ", ";
+            (*it)->print ();
+        }
+    }
+    cout << endl;
+    // Imprimindo passageiros nos carros
+
+    cout << endl;
 }

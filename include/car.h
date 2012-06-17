@@ -12,7 +12,7 @@ class Car : public Thread {
         Car (RollerCoasterMonitor *rcm, unsigned int capacity) : 
             rcm_(rcm), capacity_(capacity), isRunning_(false), 
             passenger_list_() {
-            carId_ = nextCarId++;
+            car_id_ = next_car_id++;
         }
         ~Car () {}
         void run ();
@@ -23,7 +23,7 @@ class Car : public Thread {
             passenger_list_.remove (p);
         }
         unsigned int getId () const {
-            return carId_;
+            return car_id_;
         }
         unsigned int getCapacity () const {
             return capacity_;
@@ -33,8 +33,8 @@ class Car : public Thread {
         }
     private:
         RollerCoasterMonitor *rcm_;
-        static unsigned int nextCarId;
-        unsigned int carId_;
+        static unsigned int next_car_id;
+        unsigned int car_id_;
         unsigned int capacity_;
         bool isRunning_;
         std::list<Passenger*> passenger_list_;

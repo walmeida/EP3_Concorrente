@@ -35,13 +35,13 @@ int main(int argc, char* argv[]){
     srand (iseed);
     RollerCoasterMonitor rcm(m);
     Thread t;
-    std::cout << t.start () << std::endl;
+    t.start ();
     Car c(&rcm, C);
     rcm.setCar(0, &c);
-    std::cout << c.start () << std::endl;
+    c.start ();
 
     Passenger p(&rcm);
-    std::cout << p.start () << std::endl;
+    p.start ();
     
     struct timespec tim, tim2;
     tim.tv_sec = 1;
