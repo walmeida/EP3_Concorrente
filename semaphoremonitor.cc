@@ -10,6 +10,10 @@ int SemaphoreMonitor::Init () {
     sprintf (sem_name_, "sem_monitor%llu", id_);
     mutex_ = sem_open (sem_name_, O_CREAT | O_EXCL, S_IRWXU, 1);
     id_++;
+    if (!mutex_ || mutex_ == SEM_FAILED) { // try again
+        sem_unlink (sem_name_);
+        mutex_ = sem_open (sem_name_, O_CREAT | O_EXCL, S_IRWXU, 1);
+    }
     if (!mutex_ || mutex_ == SEM_FAILED)
         return 1;
     return 0;
