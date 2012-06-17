@@ -1,7 +1,9 @@
 #include <cstdlib>
 #include <iostream>
+#include <time.h>
 #include "thread.h"
 #include "car.h"
+#include "passenger.h"
 
 /* Número de Carrinhos */
 int m;
@@ -27,11 +29,15 @@ void read_parameters(int argc, char* argv[]){
 
 int main(int argc, char* argv[]){
     read_parameters (argc,argv);
+    unsigned int iseed = (unsigned int) time(NULL);
+    srand (iseed);
     Thread t;
     std::cout << t.start () << std::endl;
     Car c;
     std::cout << c.start () << std::endl;
 
+    Passenger p;
+    std::cout << p.start () << std::endl;
     
     struct timespec tim, tim2;
     tim.tv_sec = 1;
