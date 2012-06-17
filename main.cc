@@ -4,6 +4,7 @@
 #include "thread.h"
 #include "car.h"
 #include "passenger.h"
+#include "conditionvariable.h"
 
 /* Número de Carrinhos */
 int m;
@@ -28,8 +29,8 @@ void read_parameters(int argc, char* argv[]){
 }
 
 int main(int argc, char* argv[]){
-    read_parameters (argc,argv);
     unsigned int iseed = (unsigned int) time(NULL);
+    read_parameters (argc,argv);
     srand (iseed);
     Thread t;
     std::cout << t.start () << std::endl;
@@ -44,6 +45,11 @@ int main(int argc, char* argv[]){
     tim.tv_nsec = 500;
     nanosleep(&tim , &tim2);
     
+    ConditionVariable<Thread> cv(3);
+    cv.Insert (t,2);
+    cv.Insert (c,0);
+    cv.Remove ();
+    cv.Remove ();
 
     return 0;
 }
