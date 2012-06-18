@@ -40,19 +40,11 @@ RollerCoasterMonitor:
     - carrega()
     - descarrega()
 
-TimeManager: herda de Thread
+TimeManager:
     Possui um objeto SemaphoreMonitor
-    - run()
-        Loop infinito de advanceTime().
-        Único método que não respeita restrições de monitor.
-        (é feio, mas fica assim se não encontrarmos solução melhor e
-         igualmente simples)
-        ALTERNATIVA: colocar este método no main() ou coisa equivalente,
-                     e isso deixa de herdar de Thread.
     - advanceTime()
         Incrementa tempo
         Acorda PassengerCreator ou Car (ou ambos)
-        Cars são organizados por rank (não pode haver ultrapassagem).
     - time()
         Devolve o instante de tempo atual.
     - delay(interval)
@@ -64,3 +56,6 @@ ConditionVariable:
     Cada fila é para um rank diferente.
     - insert(Thread)
     - remove()
+
+main:
+    Loop infinito de advanceTime() do TimeManager.
