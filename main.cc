@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <time.h>
+#include <vector>
 #include "thread.h"
 #include "car.h"
 #include "passenger.h"
@@ -29,14 +30,24 @@ void read_parameters(int argc, char* argv[]){
     std::cout << "taxa: " << taxa << " m: " << m << " C: " << C << std::endl;
 }
 
+
 int main(int argc, char* argv[]){
     unsigned int iseed = (unsigned int) time(NULL);
     read_parameters (argc,argv);
     srand (iseed);
     RollerCoasterMonitor rcm(m);
-    Car c(&rcm, C);
-    rcm.setCar(0, &c);
-    c.start ();
+    
+    /* Inicializa os cars - pode ser abstraido */
+    std::vector<Car> cars;
+    for(int i = 0; i < m; i++){
+      cars.push_back(Car(&rcm, C));
+      rcm.setCar(i, &cars[i]);
+      cars[i].start ();
+    }
+    
+    //Car c(&rcm, C);
+    //rcm.setCar(0, &c);
+    //c.start ();
 
     Passenger p(&rcm);
     p.start ();
