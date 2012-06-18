@@ -4,10 +4,10 @@
 
 class PassengerCreator : public Thread {
     private:
-       /*const float PROPORCAO;*/
     public:
         PassengerCreator ();
         ~PassengerCreator ();
+        void creator(RollerCoasterMonitor *rcm);
 };
 
 #endif // PASSENGERCREATOR_H_

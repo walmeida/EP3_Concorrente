@@ -7,6 +7,7 @@
 #include "passenger.h"
 #include "conditionvariable.h"
 #include "rollercoastermonitor.h"
+#include "passengercreator.h"
 
 /* Número de Carrinhos */
 int m;
@@ -45,10 +46,13 @@ int main(int argc, char* argv[]){
       cars[i].start ();
     }
     
-    //Car c(&rcm, C);
-    //rcm.setCar(0, &c);
-    //c.start ();
-
+    /* Tentativa de inicializar os Passageiros /
+    PassengerCreator pc;
+    
+    for(int i = 0; i < 5; i++){
+      pc.creator(&rcm);
+    }*/
+        
     Passenger p(&rcm);
     p.start ();
     Passenger p2(&rcm);
