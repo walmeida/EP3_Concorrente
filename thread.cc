@@ -7,3 +7,4 @@ void* thread_run_wrapper (void * thread) {
 }
 
 unsigned long long Thread::id_ = 0;
+sem_t *Thread::current_thread_sem_ = 0;

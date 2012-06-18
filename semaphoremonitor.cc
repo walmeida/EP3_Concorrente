@@ -36,15 +36,17 @@ bool SemaphoreMonitor::empty (ConditionVariable<sem_t*>& cv) {
     return cv.empty();
 }
 
-void SemaphoreMonitor::wait (sem_t *s, ConditionVariable<sem_t*>& cv) {
+void SemaphoreMonitor::wait (ConditionVariable<sem_t*>& cv) {
+    sem_t* s = Thread::current_thread_sem_;
     cv.insert (s, 0);
     sem_post (mutex_);
     sem_wait (s);
     sem_wait (mutex_);
 }
 
-void SemaphoreMonitor::wait (sem_t *s, ConditionVariable<sem_t*>& cv,
+void SemaphoreMonitor::wait (ConditionVariable<sem_t*>& cv,
                              unsigned int rank) {
+    sem_t* s = Thread::current_thread_sem_;
     cv.insert (s, rank);
     sem_post (mutex_);
     sem_wait (s);

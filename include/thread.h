@@ -43,6 +43,10 @@ class Thread {
         sem_t* getSemaphore () const {
             return semaphore_;
         }
+        void setCurrentThreadSem () {
+            current_thread_sem_ = semaphore_;
+        }
+        static sem_t* current_thread_sem_;
     private:
         static unsigned long long id_;
         char sem_name_[100];

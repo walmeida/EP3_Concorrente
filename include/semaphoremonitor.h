@@ -12,8 +12,8 @@ class SemaphoreMonitor {
         void monitorEntry ();
         void monitorExit ();
         bool empty (ConditionVariable<sem_t*>& cv);
-        void wait (sem_t *s, ConditionVariable<sem_t*>& cv);
-        void wait (sem_t *s, ConditionVariable<sem_t*>& cv,
+        void wait (ConditionVariable<sem_t*>& cv);
+        void wait (ConditionVariable<sem_t*>& cv,
                    unsigned int rank);
         void signal (ConditionVariable<sem_t*>& cv);
         void signal_all (ConditionVariable<sem_t*>& cv);

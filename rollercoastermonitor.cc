@@ -29,19 +29,20 @@ void RollerCoasterMonitor::pegaCarona (Passenger* p) {
     passengers_queue_.push_back (p);
     cout << "Passageiro chegou" << endl << endl;
     printInfo ();
-    sem_t *s = p->getSemaphore ();
     const unsigned int rank = p->hasGoldenTicket () ? 0 : 1;
     // Se houver alguem na fila, ele precisa entrar nela primeiro
     if (!car_available_.empty()) {
         p->print ();
         std::cout << " Line is not empty, waiting" << std::endl;
-        sm_.wait (s, car_available_, rank);
+        p->setCurrentThreadSem ();
+        sm_.wait (car_available_, rank);
     }
     // Espera para poder entrar no carrinho
     while (car_ == 0) {
         p->print ();
         std::cout << " No car available, waiting" << std::endl;
-        sm_.wait (s, car_available_, rank);
+        p->setCurrentThreadSem ();
+        sm_.wait (car_available_, rank);
     }
     p->print ();
     std::cout << " Entering car" << std::endl;
@@ -55,7 +56,8 @@ void RollerCoasterMonitor::pegaCarona (Passenger* p) {
     while (!finished_ride_[myCar]) {
         p->print ();
         std::cout << " Esperando fim do passeio" << std::endl;
-        sm_.wait (s, open_[myCar]);
+        p->setCurrentThreadSem ();
+        sm_.wait (open_[myCar]);
     }
     p->print ();
     std::cout << " Acabou o passeio" << std::endl;
@@ -66,10 +68,10 @@ void RollerCoasterMonitor::pegaCarona (Passenger* p) {
     
 void RollerCoasterMonitor::carrega (Car* c) {
     sm_.monitorEntry ();
-    sem_t *s = c->getSemaphore ();
     const unsigned int myId = c->getId ();
     while (car_loading_ != myId) {
-        sm_.wait (s, car_has_loaded_);
+        c->setCurrentThreadSem ();
+        sm_.wait (car_has_loaded_);
     }
     std::cout << "Car "<< myId << " is ready to load!" << std::endl;
     seat_ = c->getCapacity ();
@@ -78,7 +80,8 @@ void RollerCoasterMonitor::carrega (Car* c) {
         car_ = 1;
         sm_.signal (car_available_);
         std::cout << " -- Car "<< myId << " still has " << seat_ << " seats available" << std::endl;
-        sm_.wait (s, seat_occupied_);
+        c->setCurrentThreadSem ();
+        sm_.wait (seat_occupied_);
         std::cout << " == Car "<< myId << " still has " << seat_ << " seats available" << std::endl;
     }
     std::cout << "Car "<< myId << " is moving!" << std::endl;
@@ -92,13 +95,13 @@ void RollerCoasterMonitor::carrega (Car* c) {
 
 void RollerCoasterMonitor::descarrega (Car* c) {
     sm_.monitorEntry ();
-    sem_t *s = c->getSemaphore ();
     const unsigned int myId = c->getId ();
     finished_ride_[myId] = true;
     car_moving_[myId] = false;
     while (!c->empty ()) {
         sm_.signal (open_[myId]);
-        sm_.wait (s, passenger_left_[myId]);
+        c->setCurrentThreadSem ();
+        sm_.wait (passenger_left_[myId]);
     }
     finished_ride_[myId] = false;
     cout << "Carro " << myId << " terminou passeio" << endl << endl;
