@@ -2,12 +2,16 @@
 #define PASSENGERCREATOR_H_
 #include "passenger.h"
 
+class RollerCoasterMonitor;
+
 class PassengerCreator : public Thread {
-    private:
     public:
-        PassengerCreator ();
+        PassengerCreator (RollerCoasterMonitor *rcm);
         ~PassengerCreator ();
-        void creator(RollerCoasterMonitor *rcm);
+        void run ();
+    private:
+        RollerCoasterMonitor *rcm_;
+        bool createGoldenTicket ();
 };
 
 #endif // PASSENGERCREATOR_H_

@@ -25,8 +25,10 @@ class Thread {
                 sem_unlink (sem_name_);
                 semaphore_ = sem_open (sem_name_, O_CREAT | O_EXCL, S_IRWXU, 0);
             }
-            if (semaphore_ == SEM_FAILED)
+            if (semaphore_ == SEM_FAILED) {
+                semaphore_ = NULL;
                 return 1;
+            }
             pthread_attr_t tattr;
             if (pthread_attr_init (&tattr))
                 return 2;

@@ -8,10 +8,10 @@ class RollerCoasterMonitor;
 
 class Passenger : public Thread {
     public:
-        Passenger (RollerCoasterMonitor *rcm) : rcm_(rcm), rides_left_(2) {
-            goldenTicket = createGoldenTicket();
+        Passenger (bool goldenTicket, RollerCoasterMonitor *rcm) : 
+                rcm_(rcm), rides_left_(2), goldenTicket_(goldenTicket) {
             passenger_id_ = next_passenger_id_++;
-            if (goldenTicket) {
+            if (goldenTicket_) {
                 sprintf (print_id_, "D%u:", passenger_id_);
             } else {
                 sprintf (print_id_, "%u:", passenger_id_);
@@ -20,10 +20,13 @@ class Passenger : public Thread {
         ~Passenger () {}
         void run ();
         void print () const {
-            std::cout << print_id_ << (2 - rides_left_);
+            std::cout << print_id_ << (2 - rides_left_ - 1);
         }
         bool hasGoldenTicket () const {
-            return goldenTicket;
+            return goldenTicket_;
+        }
+        bool finishedRide () const {
+            return rides_left_ == 0;
         }
     private:
         static unsigned int next_passenger_id_;
@@ -31,14 +34,7 @@ class Passenger : public Thread {
         char print_id_[100];
         RollerCoasterMonitor *rcm_;
         unsigned int rides_left_;
-        bool goldenTicket;
-        bool createGoldenTicket(){
-            float valor;
-            valor = rand() / ( RAND_MAX + 1.0 );
-            if(valor > 0.3) 
-                return true;
-            return false;
-        }
+        bool goldenTicket_;
 };
 
 #endif // PASSENGER_H_
