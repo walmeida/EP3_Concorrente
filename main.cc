@@ -9,8 +9,6 @@
 #include "rollercoastermonitor.h"
 #include "passengercreator.h"
 
-#include </opt/local/include/valgrind/memcheck.h>
-
 /* Número de Carrinhos */
 int m;
 /* Número de Passageiros em cada Carrinho */
@@ -62,16 +60,6 @@ int main(int argc, char* argv[]){
     tim.tv_sec = 3;
     tim.tv_nsec = 500;
     nanosleep(&tim , &tim2);
-    for (unsigned int i = 0; i < 10; ++i) {
-        i--;
-        VALGRIND_DO_LEAK_CHECK;
-        i++;
-    }
-    // SEGFAULT!
-    //volatile int *p = reinterpret_cast<volatile int*>(0);
-    //*p = 0x1337D00D;
-    
-
 
     return 0;
 }
