@@ -6,7 +6,7 @@ SemaphoreMonitor::SemaphoreMonitor () : mutex_(0) {
     sem_name_[0] = '\0';
 }
 
-int SemaphoreMonitor::Init () {
+int SemaphoreMonitor::init () {
     sprintf (sem_name_, "sem_monitor%llu", id_);
     mutex_ = sem_open (sem_name_, O_CREAT | O_EXCL, S_IRWXU, 1);
     id_++;

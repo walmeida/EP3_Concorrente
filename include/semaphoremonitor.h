@@ -8,7 +8,7 @@ class SemaphoreMonitor {
     public:
         SemaphoreMonitor ();
         ~SemaphoreMonitor ();
-        int Init ();
+        int init ();
         void monitorEntry ();
         void monitorExit ();
         bool empty (ConditionVariable<sem_t*>& cv);
