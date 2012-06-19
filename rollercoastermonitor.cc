@@ -32,35 +32,23 @@ void RollerCoasterMonitor::pegaCarona (Passenger* p) {
     const unsigned int rank = p->hasGoldenTicket () ? 0 : 1;
     // Se houver alguem na fila, ele precisa entrar nela primeiro
     if (!car_available_.empty()) {
-        p->print ();
-        std::cout << " Line is not empty, waiting" << std::endl;
         p->setCurrentThreadSem ();
         sm_.wait (car_available_, rank);
     }
     // Espera para poder entrar no carrinho
     while (car_ == 0) {
-        p->print ();
-        std::cout << " No car available, waiting" << std::endl;
         p->setCurrentThreadSem ();
         sm_.wait (car_available_, rank);
     }
-    p->print ();
-    std::cout << " Entering car" << std::endl;
     car_--; car_list_[car_loading_]->addPassenger (p);
     passengers_queue_.remove (p);
     const unsigned int myCar = car_loading_;
     seat_--; sm_.signal_all (seat_occupied_);
-    p->print ();
-    std::cout << " Ainda tem " << seat_ << " lugares disponiveis." << std::endl;
     // Espera terminar o passeio
     while (!finished_ride_[myCar]) {
-        p->print ();
-        std::cout << " Esperando fim do passeio" << std::endl;
         p->setCurrentThreadSem ();
         sm_.wait (open_[myCar]);
     }
-    p->print ();
-    std::cout << " Acabou o passeio" << std::endl;
     car_list_[myCar]->removePassenger (p);
     sm_.signal (passenger_left_[myCar]);
     sm_.monitorExit ();
@@ -73,18 +61,13 @@ void RollerCoasterMonitor::carrega (Car* c) {
         c->setCurrentThreadSem ();
         sm_.wait (car_has_loaded_);
     }
-    std::cout << "Car "<< myId << " is ready to load!" << std::endl;
     seat_ = c->getCapacity ();
     while (seat_ > 0) {
-        std::cout << " __ Car "<< myId << " still has " << seat_ << " seats available" << std::endl;
         car_ = 1;
         sm_.signal (car_available_);
-        std::cout << " -- Car "<< myId << " still has " << seat_ << " seats available" << std::endl;
         c->setCurrentThreadSem ();
         sm_.wait (seat_occupied_);
-        std::cout << " == Car "<< myId << " still has " << seat_ << " seats available" << std::endl;
     }
-    std::cout << "Car "<< myId << " is moving!" << std::endl;
     car_moving_[myId] = true;
     car_loading_ = (car_loading_ + 1) % number_of_cars_;
     sm_.signal_all (car_has_loaded_);

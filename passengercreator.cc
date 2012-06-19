@@ -11,7 +11,7 @@ PassengerCreator::PassengerCreator (RollerCoasterMonitor *rcm, TimeManager* tm) 
 PassengerCreator::~PassengerCreator () {}
 
 void PassengerCreator::run () {
-    for (int i = 0; i < 20; ++i) {
+    while (1) {
         Passenger* p = new Passenger (createGoldenTicket (), rcm_);
         int result = p->start ();
         if (result) {
