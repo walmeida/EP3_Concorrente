@@ -1,6 +1,7 @@
 #include "orderedconditionvariable.h"
 
-OrderedConditionVariable::OrderedConditionVariable () {}
+OrderedConditionVariable::OrderedConditionVariable () :
+    queue_() {}
 
 OrderedConditionVariable::~OrderedConditionVariable () {
     std::set<WaitingThread*, WaitingThreadComp>::iterator it;
@@ -32,5 +33,8 @@ bool OrderedConditionVariable::empty () const {
 }
 
 unsigned int OrderedConditionVariable::getMinRank () const {
-    return (*(queue_.begin ()))->deadline;
+    std::set<WaitingThread*, WaitingThreadComp>::const_iterator it;
+    it = queue_.begin ();
+    const WaitingThread* wt = *it;
+    return wt->deadline;
 }

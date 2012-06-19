@@ -11,10 +11,12 @@ TimeManager::~TimeManager () {}
 
 void TimeManager::advanceTime () {
     sm_.monitorEntry ();
-    unsigned int new_time = sleeping_threads_.getMinRank ();
-    do {
-        sm_.signal (sleeping_threads_);
-    } while (new_time == sleeping_threads_.getMinRank ());
+    if (!sleeping_threads_.empty ()) {
+        unsigned int new_time = sleeping_threads_.getMinRank ();
+        do {
+            sm_.signal (sleeping_threads_);
+        } while (!sleeping_threads_.empty () && (new_time == sleeping_threads_.getMinRank ()));
+    }
     sm_.monitorExit ();
 }
 

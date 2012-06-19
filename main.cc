@@ -7,6 +7,7 @@
 #include "passenger.h"
 #include "conditionvariable.h"
 #include "rollercoastermonitor.h"
+#include "timemanager.h"
 #include "passengercreator.h"
 
 /* Número de Carrinhos */
@@ -37,6 +38,7 @@ int main(int argc, char* argv[]){
     read_parameters (argc,argv);
     srand (iseed);
     RollerCoasterMonitor rcm (m);
+    TimeManager tm;
     
     /* Inicializa os cars - pode ser abstraido */
     std::vector<Car*> cars;
@@ -54,13 +56,12 @@ int main(int argc, char* argv[]){
     }
     
     /* Criando os Passageiros */
-    PassengerCreator pc (&rcm);
+    PassengerCreator pc (&rcm, &tm);
     pc.start ();
     
-    struct timespec tim, tim2;
-    tim.tv_sec = 3;
-    tim.tv_nsec = 500;
-    nanosleep(&tim , &tim2);
+    while (1) {
+        tm.advanceTime ();
+    }
 
     for (int i = 0; i < m; i++) {
         delete cars[i];

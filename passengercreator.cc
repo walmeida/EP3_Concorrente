@@ -1,8 +1,12 @@
 #include "passengercreator.h"
 #include "rollercoastermonitor.h"
+#include "timemanager.h"
 #include <iostream>
 
-PassengerCreator::PassengerCreator (RollerCoasterMonitor *rcm) : rcm_(rcm) {}
+PassengerCreator::PassengerCreator (RollerCoasterMonitor *rcm, TimeManager* tm) :
+        rcm_(rcm), tm_(tm) {
+    delay_ = 10;
+}
 
 PassengerCreator::~PassengerCreator () {}
 
@@ -14,14 +18,8 @@ void PassengerCreator::run () {
             std::cout << "ERRO " << result << " CRIANDO PASSAGEIRO" << std::endl;
             delete p;
         }
-
-        // TODO TimeManager
         
-        struct timespec tim, tim2;
-        tim.tv_sec = 0;
-        tim.tv_nsec = 300;
-        nanosleep(&tim , &tim2);
-        
+        tm_->delay (this, delay_);
     }
 }
 
