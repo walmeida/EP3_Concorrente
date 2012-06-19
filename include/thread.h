@@ -16,7 +16,7 @@ class Thread {
             id_++;
         }
         ~Thread () {
-            pthread_detach(tid_);
+            //pthread_detach(tid_);
             sem_close (semaphore_);
             sem_unlink (sem_name_);
         }

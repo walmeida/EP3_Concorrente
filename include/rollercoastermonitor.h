@@ -4,7 +4,7 @@
 #include <vector>
 #include <list>
 #include <semaphore.h>
-#include "conditionvariable.h"
+#include "rankconditionvariable.h"
 #include "semaphoremonitor.h"
 
 class Car;
@@ -27,11 +27,11 @@ class RollerCoasterMonitor {
         std::vector<bool> car_moving_;
         std::vector<bool> finished_ride_;
         unsigned int car_, seat_, car_loading_;
-        ConditionVariable<sem_t*> car_has_loaded_;
-        ConditionVariable<sem_t*> car_available_;
-        ConditionVariable<sem_t*> seat_occupied_;
-        std::vector<ConditionVariable<sem_t*> > open_;
-        std::vector<ConditionVariable<sem_t*> > passenger_left_;
+        RankConditionVariable car_has_loaded_;
+        RankConditionVariable car_available_;
+        RankConditionVariable seat_occupied_;
+        std::vector<RankConditionVariable> open_;
+        std::vector<RankConditionVariable> passenger_left_;
 };
 
 #endif

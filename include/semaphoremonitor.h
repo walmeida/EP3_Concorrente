@@ -11,13 +11,12 @@ class SemaphoreMonitor {
         int init ();
         void monitorEntry ();
         void monitorExit ();
-        bool empty (ConditionVariable<sem_t*>& cv);
-        void wait (ConditionVariable<sem_t*>& cv);
-        void wait (ConditionVariable<sem_t*>& cv,
-                   unsigned int rank);
-        void signal (ConditionVariable<sem_t*>& cv);
-        void signal_all (ConditionVariable<sem_t*>& cv);
-        unsigned int minrank (ConditionVariable<sem_t*>& cv);
+        bool empty (ConditionVariable& cv);
+        void wait (ConditionVariable& cv);
+        void wait (ConditionVariable& cv, unsigned int rank);
+        void signal (ConditionVariable& cv);
+        void signal_all (ConditionVariable& cv);
+        unsigned int minrank (ConditionVariable& cv);
     private:
         char sem_name_[100];
         static unsigned long long id_;

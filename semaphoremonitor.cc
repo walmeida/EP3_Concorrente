@@ -1,4 +1,6 @@
 #include "semaphoremonitor.h"
+#include "thread.h"
+#include <cstdio>
 
 unsigned long long SemaphoreMonitor::id_ = 0;
 
@@ -32,11 +34,11 @@ void SemaphoreMonitor::monitorExit () {
     sem_post (mutex_);
 }
 
-bool SemaphoreMonitor::empty (ConditionVariable<sem_t*>& cv) {
+bool SemaphoreMonitor::empty (ConditionVariable& cv) {
     return cv.empty();
 }
 
-void SemaphoreMonitor::wait (ConditionVariable<sem_t*>& cv) {
+void SemaphoreMonitor::wait (ConditionVariable& cv) {
     sem_t* s = Thread::current_thread_sem_;
     cv.insert (s, 0);
     sem_post (mutex_);
@@ -44,8 +46,7 @@ void SemaphoreMonitor::wait (ConditionVariable<sem_t*>& cv) {
     sem_wait (mutex_);
 }
 
-void SemaphoreMonitor::wait (ConditionVariable<sem_t*>& cv,
-                             unsigned int rank) {
+void SemaphoreMonitor::wait (ConditionVariable& cv, unsigned int rank) {
     sem_t* s = Thread::current_thread_sem_;
     cv.insert (s, rank);
     sem_post (mutex_);
@@ -53,20 +54,20 @@ void SemaphoreMonitor::wait (ConditionVariable<sem_t*>& cv,
     sem_wait (mutex_);
 }
 
-void SemaphoreMonitor::signal (ConditionVariable<sem_t*>& cv) {
+void SemaphoreMonitor::signal (ConditionVariable& cv) {
     if (!cv.empty()) {
         sem_t *s = cv.remove ();
         sem_post (s);
     }
 }
 
-void SemaphoreMonitor::signal_all (ConditionVariable<sem_t*>& cv) {
+void SemaphoreMonitor::signal_all (ConditionVariable& cv) {
     while (!cv.empty()) {
         sem_t *s = cv.remove ();
         sem_post (s);
     }
 }
 
-unsigned int minrank (ConditionVariable<sem_t*>& cv) {
+unsigned int minrank (ConditionVariable& cv) {
     return cv.getMinRank ();
 }
