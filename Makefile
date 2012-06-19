@@ -10,12 +10,12 @@ EXE = montanharussa
 
 _DEPS = passenger.h passengercreator.h thread.h timemanager.h car.h \
 		rollercoastermonitor.h semaphoremonitor.h rankconditionvariable.h \
-		orderedconditionvariable.h
+		orderedconditionvariable.h timemanager.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 _OBJ = main.o passenger.o passengercreator.o thread.o timemanager.o car.o \
 	   rollercoastermonitor.o semaphoremonitor.o rankconditionvariable.o \
-	   orderedconditionvariable.o
+	   orderedconditionvariable.o timemanager.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: %.cc $(DEPS)
