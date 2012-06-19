@@ -39,14 +39,15 @@ int main(int argc, char* argv[]){
     RollerCoasterMonitor rcm (m);
     
     /* Inicializa os cars - pode ser abstraido */
-    std::vector<Car> cars;
+    std::vector<Car*> cars;
     for (int i = 0; i < m; i++) {
-        cars.push_back (Car (&rcm, C));
-        rcm.setCar (i, &cars[i]);
+        Car *c = new Car (&rcm, C);
+        cars.push_back (c);
+        rcm.setCar (i, c);
     }
 
     for (int i = 0; i < m; i++) {
-        if (cars[i].start ()) {
+        if (cars[i]->start ()) {
             std::cout << "ERRO CRIANDO CARRO!!!" << std::endl;
             exit (EXIT_FAILURE);
         }
@@ -60,6 +61,11 @@ int main(int argc, char* argv[]){
     tim.tv_sec = 3;
     tim.tv_nsec = 500;
     nanosleep(&tim , &tim2);
+
+    for (int i = 0; i < m; i++) {
+        delete cars[i];
+        cars[i] = 0;
+    }
 
     return 0;
 }

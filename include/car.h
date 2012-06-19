@@ -27,7 +27,7 @@ class Car : public Thread {
         const_iterator end () const {
             return passenger_list_.end ();
         }
-        unsigned int occupiedSeats () {
+        unsigned int occupiedSeats () const {
             return passenger_list_.size ();
         }
         unsigned int getId () const {

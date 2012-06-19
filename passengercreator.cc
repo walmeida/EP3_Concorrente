@@ -16,12 +16,12 @@ void PassengerCreator::run () {
         }
 
         // TODO TimeManager
-        /*
+        
         struct timespec tim, tim2;
         tim.tv_sec = 0;
         tim.tv_nsec = 300;
         nanosleep(&tim , &tim2);
-        */
+        
     }
 }
 

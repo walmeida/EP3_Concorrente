@@ -49,7 +49,7 @@ void RollerCoasterMonitor::pegaCarona (Passenger* p) {
     car_--; car_list_[car_loading_]->addPassenger (p);
     passengers_queue_.remove (p);
     const unsigned int myCar = car_loading_;
-    seat_--; sm_.signal (seat_occupied_);
+    seat_--; sm_.signal_all (seat_occupied_);
     p->print ();
     std::cout << " Ainda tem " << seat_ << " lugares disponiveis." << std::endl;
     // Espera terminar o passeio
@@ -61,7 +61,7 @@ void RollerCoasterMonitor::pegaCarona (Passenger* p) {
     }
     p->print ();
     std::cout << " Acabou o passeio" << std::endl;
-    car_list_[car_loading_]->removePassenger (p);
+    car_list_[myCar]->removePassenger (p);
     sm_.signal (passenger_left_[myCar]);
     sm_.monitorExit ();
 }
@@ -75,7 +75,7 @@ void RollerCoasterMonitor::carrega (Car* c) {
     }
     std::cout << "Car "<< myId << " is ready to load!" << std::endl;
     seat_ = c->getCapacity ();
-    while (seat_ != 0) {
+    while (seat_ > 0) {
         std::cout << " __ Car "<< myId << " still has " << seat_ << " seats available" << std::endl;
         car_ = 1;
         sm_.signal (car_available_);
@@ -130,7 +130,10 @@ void RollerCoasterMonitor::printInfo () {
             cout << "Movendo-se com ";
         else
             cout << "Parado com ";
-        cout << car_list_[c]->occupiedSeats () << " passageiros: \n\t";
+        if (car_list_[c] == NULL)
+            cout << "ERROR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
+        else
+            cout << car_list_[c]->occupiedSeats () << " passageiros: \n\t";
         Car::const_iterator it = car_list_[c]->begin ();
         if (it != car_list_[c]->end ()) {
             (*it)->print ();
