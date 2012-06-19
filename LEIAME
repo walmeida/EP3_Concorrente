@@ -1,0 +1,18 @@
+/* ******************************************************* */
+/* Aluno: Jefferson Serafim Ascaneo   NUSP 6431284         */
+/* Aluno: Wallace Faveron de Almeida  NUSP 6879609 	       */
+/* MAC0438 - 2012 - IME-USP	                               */
+/* Prof. Daniel Macedo Bastista                            */
+/* EP3 - Montanha Russa                                    */
+/* Programa testado e compilado no Ubuntu 10.10	           */
+/* ******************************************************* */
+
+Indicação dos arquivos e linhas das implementações das funções de monitor:
+
+empty(cv):        semaphoremonitor.cc --- Linhas 37~39
+wait(cv):         semaphoremonitor.cc --- Linhas 41~47
+wait(cv,rank):    semaphoremonitor.cc --- Linhas 49~55
+signal(cv):       semaphoremonitor.cc --- Linhas 57~62
+signal_all(cv):   semaphoremonitor.cc --- Linhas 64~69
+minrank(cv):      semaphoremonitor.cc --- Linhas 71~73
+
