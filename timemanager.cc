@@ -26,6 +26,7 @@ unsigned int TimeManager::time () const {
 
 void TimeManager::delay (Thread* t, unsigned int interval) {
     sm_.monitorEntry ();
+    t->setCurrentThreadSem ();
     sm_.wait (sleeping_threads_, time_ + interval);
     sm_.monitorExit ();
 }
