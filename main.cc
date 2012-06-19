@@ -43,7 +43,7 @@ int main(int argc, char* argv[]){
     /* Inicializa os cars - pode ser abstraido */
     std::vector<Car*> cars;
     for (int i = 0; i < m; i++) {
-        Car *c = new Car (&rcm, C);
+        Car *c = new Car (&rcm, &tm, C);
         cars.push_back (c);
         rcm.setCar (i, c);
     }

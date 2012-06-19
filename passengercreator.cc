@@ -5,7 +5,7 @@
 
 PassengerCreator::PassengerCreator (RollerCoasterMonitor *rcm, TimeManager* tm) :
         rcm_(rcm), tm_(tm) {
-    delay_ = 10;
+            delay_ = (unsigned int) (1.0 / taxa);
 }
 
 PassengerCreator::~PassengerCreator () {}

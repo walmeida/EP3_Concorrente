@@ -4,6 +4,7 @@
 
 class RollerCoasterMonitor;
 class TimeManager;
+extern float taxa;
 
 class PassengerCreator : public Thread {
     public:

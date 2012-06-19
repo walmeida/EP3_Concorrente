@@ -1,5 +1,6 @@
 #include "car.h"
 #include "rollercoastermonitor.h"
+#include "timemanager.h"
 
 #include "passenger.h"
 
@@ -8,6 +9,7 @@ unsigned int Car::next_car_id = 0;
 void Car::run () {
     for (int i = 0; i < 50; ++i) {
         rcm_->carrega (this);
+        tm_->delay (this, 100);
         rcm_->descarrega (this);
         deletePassengers ();
     }

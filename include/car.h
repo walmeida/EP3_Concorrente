@@ -5,12 +5,13 @@
 #include "thread.h"
 
 class RollerCoasterMonitor;
+class TimeManager;
 class Passenger;
 
 class Car : public Thread {
     public:
-        Car (RollerCoasterMonitor *rcm, unsigned int capacity) : 
-            rcm_(rcm), capacity_(capacity), isRunning_(false), 
+        Car (RollerCoasterMonitor *rcm, TimeManager* tm, unsigned int capacity) : 
+            rcm_(rcm), tm_(tm), capacity_(capacity), isRunning_(false), 
             passenger_list_(), passenger_delete_list_() {
             car_id_ = next_car_id++;
         }
@@ -41,7 +42,8 @@ class Car : public Thread {
         }
         void deletePassengers ();
     private:
-        RollerCoasterMonitor *rcm_;
+        RollerCoasterMonitor* rcm_;
+        TimeManager* tm_;
         static unsigned int next_car_id;
         unsigned int car_id_;
         unsigned int capacity_;
