@@ -7,7 +7,7 @@
 unsigned int Car::next_car_id = 0;
 
 void Car::run () {
-    for (int i = 0; i < 50; ++i) {
+    while (1) {
         rcm_->carrega (this);
         tm_->delay (this, 100);
         rcm_->descarrega (this);
